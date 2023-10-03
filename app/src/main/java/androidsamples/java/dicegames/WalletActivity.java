@@ -1,6 +1,8 @@
 package androidsamples.java.dicegames;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +21,16 @@ public class WalletActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_wallet);
+
+    Button twoOrMoreButton = findViewById(R.id.button_two_or_more);
+
+    twoOrMoreButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Intent intent = new Intent(WalletActivity.this, TwoOrMoreActivity.class);
+        startActivity(intent);
+      }
+    });
 
     vm = new ViewModelProvider(this).get(WalletViewModel.class);
 

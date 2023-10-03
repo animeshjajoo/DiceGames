@@ -4,6 +4,212 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TwoOrMoreActivity">
+    tools:context=".TwoOrMoreActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="0dp">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/action_tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Coins View -->
+    <TextView
+        android:id="@+id/textViewCoins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+        android:text="@string/coins"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_tool_bar" />
+
+    <!-- Options: 2 alike, 3 alike, 4 alike -->
+    <RadioGroup
+        android:id="@+id/radioGroupOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewCoins">
+
+        <RadioButton
+            android:id="@+id/radioButton2Alike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/two_alike"
+            android:textSize="18sp"
+            android:padding="6sp"/>
+
+        <RadioButton
+            android:id="@+id/radioButton3Alike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/three_alike"
+            android:textSize="18sp"
+            android:padding="6sp"/>
+
+        <RadioButton
+            android:id="@+id/radioButton4Alike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/four_alike"
+            android:textSize="18sp"
+            android:padding="6sp"/>
+    </RadioGroup>
+
+    <!-- Wager Input -->
+    <LinearLayout
+        android:id="@+id/linearWager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radioGroupOptions">
+
+        <TextView
+            android:id="@+id/textViewWagerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/wager_label"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextWager"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
+            android:autofillHints="Wager amount"
+            android:hint="@string/enter_wager_hint"
+            android:inputType="number"
+            android:padding="15sp"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonGo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/go"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!-- Dice Layout (2x2) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayoutDice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16sp"
+        app:layout_constraintTop_toBottomOf="@id/linearWager">
+
+        <!-- Die 1 -->
+        <Button
+            android:id="@+id/buttonDie1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="55sp"
+            android:text="@string/die_1"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDie2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Die 2 -->
+        <Button
+            android:id="@+id/buttonDie2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="55sp"
+            android:text="@string/die_2"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonDie1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Die 3 -->
+        <Button
+            android:id="@+id/buttonDie3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:padding="55sp"
+            android:text="@string/die_3"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDie4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonDie1" />
+
+        <!-- Die 4 -->
+        <Button
+            android:id="@+id/buttonDie4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:padding="55sp"
+            android:text="@string/die_4"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/buttonDie3"
+            app:layout_constraintTop_toBottomOf="@+id/buttonDie2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Back and Info Buttons -->
+    <LinearLayout
+        android:id="@+id/linearButtons"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayoutDice">
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/buttonInfo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="224dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="1"
+        android:text="@string/info"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDice" />
+
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="0sp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="224dp"
+        android:layout_weight="1"
+        android:text="@string/back"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDice"
+        app:layout_constraintVertical_bias="0.436" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

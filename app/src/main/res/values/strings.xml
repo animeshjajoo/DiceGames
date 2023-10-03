@@ -1,7 +1,26 @@
 <resources>
   <string name="app_name">DiceGames</string>
   <string name="zero">0</string>
-  <string name="coins">Coins</string>
+  <string name="coins">Coins: </string>
   <string name="two_or_more">Two Or More</string>
   <string name="congrats">Congratulations!</string>
+
+  <string name="two_alike">2 alike</string>
+  <string name="three_alike">3 alike</string>
+  <string name="four_alike">4 alike</string>
+
+  <string name="wager_label">  Wager:</string>
+
+  <string name="enter_wager_hint">Enter Wager</string>
+
+  <string name="go">GO</string>
+
+  <string name="die_1">Die 1</string>
+  <string name="die_2">Die 2</string>
+  <string name="die_3">Die 3</string>
+  <string name="die_4">Die 4</string>
+
+  <string name="back">Back</string>
+
+  <string name="info">Info</string>
 </resources>
