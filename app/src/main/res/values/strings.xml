@@ -23,4 +23,44 @@
   <string name="back">Back</string>
 
   <string name="info">Info</string>
+
+  <!-- Game Rules -->
+  <string name="game_rules_and_instructions">Game Rules and Instructions</string>
+  <string name="game_rules_title">Game Rules</string>
+  <string name="game_rule_1">1. It\'s a high-risk, high-return game:</string>
+  <string name="game_rule_1_description"> A player betting k coins on a “2 alike” game earns 2k coins if they win or lose 2k coins if they lose the bet.
+    Similarly, 3x for “3 alike” and 4x for “4 alike” games. </string>
+  <string name="game_rule_2">2. Wallet Balance Limit:</string>
+  <string name="game_rule_2_description"> You must check if the wallet balance is large enough to cover any losses based on the wager amount entered. </string>
+  <string name="game_rule_2_example">Ex.: if my balance is 10:</string>
+  <string name="game_rule_2_example_description">
+        - You are allowed to bet 5 coins on a “2 alike” game.
+        - But you cannot bet 5 on a “3 alike” game. The most you can bet on “3 alike” is 3.
+        - The most you can bet on “4 alike” is 2.
+  </string>
+
+  <!-- Gameplay Instructions -->
+  <string name="gameplay_instructions_title">Gameplay Instructions</string>
+  <string name="gameplay_instruction_1">1. Betting:</string>
+  <string name="gameplay_instruction_1_description">
+    Enter your wager amount in the provided input field.
+  </string>
+  <string name="gameplay_instruction_2">2. Rolling the Dice:</string>
+  <string name="gameplay_instruction_2_description">
+    When you hit the Go button, all four dice are rolled at the same time.
+  </string>
+  <string name="gameplay_instruction_3">3. Game Outcome:</string>
+  <string name="gameplay_instruction_3_description">
+    - If you win, you\'ll earn coins based on the rules mentioned above.
+    - If you lose, the wager amount will be deducted from your balance.
+  </string>
+  <string name="gameplay_instruction_4">4. Balance Update:</string>
+
+    <!-- Toast Message -->
+  <string name="toast_message">The game result will be announced via a Toast message.</string>
+  <string name="toast_message_description">Your balance will be updated according to the rules.</string>
+
+  <!-- Back to Game Button -->
+  <string name="back_to_game_button">Back to Game</string>
+
 </resources>

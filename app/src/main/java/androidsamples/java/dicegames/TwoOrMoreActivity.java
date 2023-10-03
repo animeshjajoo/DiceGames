@@ -52,6 +52,16 @@ public class TwoOrMoreActivity extends AppCompatActivity {
       }
     });
 
+    Button infoButton = findViewById(R.id.buttonInfo);
+
+    infoButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(TwoOrMoreActivity.this, InformationOfDiceGamesActivity.class);
+        startActivity(intent);
+      }
+    });
+
 //    // Set click listeners for the game type buttons
 //    btnTwoAlike.setOnClickListener(v -> {
 //      viewModel.setGameType(GameType.TWO_ALIKE);

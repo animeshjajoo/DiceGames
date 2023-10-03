@@ -32,6 +32,11 @@
           android:name="android.app.lib_name"
           android:value="" />
     </activity>
+
+    <activity
+        android:name=".InformationOfDiceGamesActivity"
+        android:label="Information of Dice Games">
+    </activity>
   </application>
 
 </manifest>
