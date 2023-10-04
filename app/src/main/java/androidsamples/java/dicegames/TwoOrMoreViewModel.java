@@ -1,6 +1,7 @@
 package androidsamples.java.dicegames;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import androidx.lifecycle.ViewModel;
 
@@ -9,11 +10,20 @@ import androidx.lifecycle.ViewModel;
  */
 public class TwoOrMoreViewModel extends ViewModel {
 
+  private int mBalance;
+  private GameType mGameType;
+  private int mWager;
+  private List<Die> mDice;
+
   /**
    * No argument constructor.
    */
   public TwoOrMoreViewModel() {
     // TODO implement method
+    mBalance = 0;
+    mGameType = null;
+    mWager = 0;
+    mDice = new ArrayList<>();
   }
 
   /**
@@ -33,6 +43,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public void setBalance(int balance) {
     // TODO implement method
+    mBalance = balance;
   }
 
   /**
@@ -42,7 +53,8 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public GameType gameType() {
     // TODO implement method
-    return null;
+    // return null;
+    return mGameType;
   }
 
   /**
@@ -52,6 +64,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public void setGameType(GameType gameType) {
     // TODO implement method
+    mGameType = gameType;
   }
 
   /**
@@ -61,7 +74,8 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public int wager() {
     // TODO implement method
-    return 0;
+    // return 0;
+    return mWager;
   }
 
   /**
@@ -71,6 +85,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public void setWager(int wager) {
     // TODO implement method
+    mWager = wager;
   }
 
   /**
@@ -80,8 +95,10 @@ public class TwoOrMoreViewModel extends ViewModel {
    *
    * @return {@code true} iff the wager set is valid
    */
-  public boolean isValidWager() {
-    return false;
+  public boolean isValidWager(){
+    if (mWager <= 0) return false;
+    int requiredBalance = mWager * (mGameType.ordinal() + 2);
+    return mBalance >= requiredBalance;
   }
 
   /**
@@ -91,7 +108,11 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public List<Integer> diceValues() {
     // TODO implement method
-    return null;
+    List<Integer> values = new ArrayList<>();
+    for (Die die : mDice) {
+      values.add(die.value());
+    }
+    return values;
   }
 
   /**
@@ -101,6 +122,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public void addDie(Die d) {
     // TODO implement method
+    mDice.add(d);
   }
 
   /**
@@ -111,6 +133,32 @@ public class TwoOrMoreViewModel extends ViewModel {
    */
   public GameResult play() throws IllegalStateException {
     // TODO implement method
-    return null;
+    if (mGameType == null || mWager <= 0) {
+      throw new IllegalStateException("Wager or game type not set properly.");
+    }
+
+    // Roll all the dice
+    for (Die die : mDice) {
+      die.roll();
+    }
+
+    // Check if the dice values match the game type
+    int matchCount = 0;
+    for (Integer value : diceValues()) {
+      if (value == mDice.get(0).value()) {
+        matchCount++;
+      }
+    }
+
+    // Determine the result and update balance
+    int multiplier = mGameType.ordinal() + 2;  // Multiplier for winnings
+    if (matchCount == mGameType.ordinal() + 2) {
+      mBalance += mWager * multiplier;
+      return GameResult.WIN;
+    } else {
+      mBalance -= mWager * multiplier;
+      return GameResult.LOSS;
+    }
+
   }
 }

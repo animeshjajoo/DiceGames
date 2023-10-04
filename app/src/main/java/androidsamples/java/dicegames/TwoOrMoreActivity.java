@@ -106,14 +106,17 @@ public class TwoOrMoreActivity extends AppCompatActivity {
 //      // You can launch a new activity or display a dialog with game rules
 //    });
 //
-//    // Initialize the UI
+
+    // Initialize the UI
 //    updateUI();
 //  }
-//
-//  private void updateUI() {
+////
+//  private void updateUI(){
 //    txtCoins.setText(getString(R.string.coins_format, viewModel.balance()));
 //    Wager.setText(String.valueOf(viewModel.wager()));
 //  }
+
+
 //
 //  private void showGameResultToast(GameResult result) {
 //    String message;
@@ -129,5 +132,6 @@ public class TwoOrMoreActivity extends AppCompatActivity {
 //        break;
 //    }
 //    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//  }
   }
 }

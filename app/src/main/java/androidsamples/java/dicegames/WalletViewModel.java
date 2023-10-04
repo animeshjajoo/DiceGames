@@ -3,11 +3,21 @@ package androidsamples.java.dicegames;
 import androidx.lifecycle.ViewModel;
 
 public class WalletViewModel extends ViewModel {
+
+  private int mBalance;
+  private int mIncrement;
+  private int mWinValue;
+  private Die mDie;
+
   /**
    * The no argument constructor.
    */
   public WalletViewModel() {
     // TODO implement method
+    mBalance = 0;
+    mIncrement = 0;
+    mWinValue = 0;
+    mDie = new Die6();
   }
 
   /**
@@ -17,7 +27,8 @@ public class WalletViewModel extends ViewModel {
    */
   public int balance() {
     // TODO implement method
-    return 0;
+    // return 0;
+    return mBalance;
   }
 
   /**
@@ -27,6 +38,7 @@ public class WalletViewModel extends ViewModel {
    */
   public void setBalance(int amount) {
     // TODO implement method
+    mBalance = amount;
   }
 
   /**
@@ -34,6 +46,14 @@ public class WalletViewModel extends ViewModel {
    */
   public void rollDie() {
     // TODO implement method
+    mDie.roll();
+    int rollValue = mDie.value();
+
+    if (rollValue == mWinValue) {
+      mBalance += mIncrement * rollValue;
+    } else {
+      mBalance -= mIncrement;
+    }
   }
 
   /**
@@ -43,7 +63,8 @@ public class WalletViewModel extends ViewModel {
    */
   public int dieValue() {
     // TODO implement method
-    return 0;
+    // return 0;
+    return mDie.value();
   }
 
   /**
@@ -53,6 +74,7 @@ public class WalletViewModel extends ViewModel {
    */
   public void setIncrement(int increment) {
     // TODO implement method
+    mIncrement = increment;
   }
 
   /**
@@ -62,6 +84,7 @@ public class WalletViewModel extends ViewModel {
    */
   public void setWinValue(int winValue) {
     // TODO implement method
+    mWinValue = winValue;
   }
 
   /**
@@ -71,5 +94,6 @@ public class WalletViewModel extends ViewModel {
    */
   public void setDie(Die d) {
     // TODO implement method
+    mDie = d;
   }
 }
