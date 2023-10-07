@@ -35,6 +35,7 @@ Testing: We initially began by writing the code without employing a test-driven 
 ### Accessibility
 -To ensure accessibility in our Android app, we utilized Espresso for testing. We've added 7 instrumented test cases.
 
+Time Taken: 12 hours
 Pair Programming: 4/5 </br>
 Assignment Difficulty: 8/10 </br>
 
