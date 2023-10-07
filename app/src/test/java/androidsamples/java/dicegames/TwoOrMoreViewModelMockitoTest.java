@@ -63,9 +63,59 @@ public class TwoOrMoreViewModelMockitoTest {
   }
 
   @Test
+  public void fourAlikeLossWhenD4Different() {
+    when(d1.value()).thenReturn(5);
+    when(d2.value()).thenReturn(5);
+    when(d3.value()).thenReturn(5);
+    when(d4.value()).thenReturn(3);
+
+    m.setGameType(GameType.FOUR_ALIKE);
+    m.setBalance(100);
+    m.setWager(5);
+    assertThat(m.play(), is(GameResult.LOSS));
+  }
+
+  @Test
+  public void threeAlikeLossWhenD1D4Different() {
+    when(d1.value()).thenReturn(3);
+    when(d2.value()).thenReturn(5);
+    when(d3.value()).thenReturn(5);
+    when(d4.value()).thenReturn(3);
+
+    m.setGameType(GameType.FOUR_ALIKE);
+    m.setBalance(100);
+    m.setWager(5);
+    assertThat(m.play(), is(GameResult.LOSS));
+  }
+
+  @Test
+  public void twoAlikeLossWhenAllDifferent() {
+    when(d1.value()).thenReturn(1);
+    when(d2.value()).thenReturn(2);
+    when(d3.value()).thenReturn(3);
+    when(d4.value()).thenReturn(4);
+
+    m.setGameType(GameType.TWO_ALIKE);
+    m.setBalance(100);
+    m.setWager(5);
+    assertThat(m.play(), is(GameResult.LOSS));
+  }
+
+  @Test
   public void twoAlikeWinsWhenD1D2Same() {
     when(d1.value()).thenReturn(2);
     when(d2.value()).thenReturn(2);
+
+    m.setGameType(GameType.TWO_ALIKE);
+    m.setBalance(100);
+    m.setWager(5);
+    assertThat(m.play(), is(GameResult.WIN));
+  }
+
+  @Test
+  public void twoAlikeWinsWhenD3D4Same() {
+    when(d3.value()).thenReturn(3);
+    when(d4.value()).thenReturn(3);
 
     m.setGameType(GameType.TWO_ALIKE);
     m.setBalance(100);
@@ -86,6 +136,18 @@ public class TwoOrMoreViewModelMockitoTest {
   }
 
   @Test
+  public void threeAlikeWinsWhenD1D2D4Same() {
+    when(d1.value()).thenReturn(4);
+    when(d2.value()).thenReturn(4);
+    when(d4.value()).thenReturn(4);
+
+    m.setGameType(GameType.THREE_ALIKE);
+    m.setBalance(100);
+    m.setWager(5);
+    assertThat(m.play(), is(GameResult.WIN));
+  }
+
+  @Test
   public void fourAlikeWinsWhenD1D2D3Same() {
     when(d1.value()).thenReturn(5);
     when(d2.value()).thenReturn(5);
@@ -97,4 +159,5 @@ public class TwoOrMoreViewModelMockitoTest {
     m.setWager(5);
     assertThat(m.play(), is(GameResult.WIN));
   }
+
 }
