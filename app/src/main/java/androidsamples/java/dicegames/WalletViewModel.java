@@ -1,23 +1,26 @@
 package androidsamples.java.dicegames;
 
+import android.util.Log;
+
 import androidx.lifecycle.ViewModel;
 
 public class WalletViewModel extends ViewModel {
 
-  private int mBalance;
-  private int mIncrement;
-  private int mWinValue;
-  private Die mDie;
+  private Die die;
+  private int current_value;
+  private int total_balance = 0;
+  private int win_value;
+  private int increment_value;
+  private static final String TAG = "WalletViewModel";
 
   /**
    * The no argument constructor.
    */
   public WalletViewModel() {
     // TODO implement method
-    mBalance = 0;
-    mIncrement = 0;
-    mWinValue = 0;
-    mDie = new Die6();
+//    die = new Die6();
+    setIncrement(5);
+    setWinValue(6);
   }
 
   /**
@@ -27,8 +30,7 @@ public class WalletViewModel extends ViewModel {
    */
   public int balance() {
     // TODO implement method
-    // return 0;
-    return mBalance;
+    return total_balance;
   }
 
   /**
@@ -38,7 +40,7 @@ public class WalletViewModel extends ViewModel {
    */
   public void setBalance(int amount) {
     // TODO implement method
-    mBalance = amount;
+    total_balance = amount;
   }
 
   /**
@@ -46,13 +48,11 @@ public class WalletViewModel extends ViewModel {
    */
   public void rollDie() {
     // TODO implement method
-    mDie.roll();
-    int rollValue = mDie.value();
-
-    if (rollValue == mWinValue) {
-      mBalance += mIncrement * rollValue;
-    } else {
-      mBalance -= mIncrement;
+    if(die == null) throw new IllegalStateException();
+    else die.roll();
+    current_value = die.value();
+    if(current_value == win_value){
+      setBalance(total_balance + increment_value);
     }
   }
 
@@ -63,8 +63,7 @@ public class WalletViewModel extends ViewModel {
    */
   public int dieValue() {
     // TODO implement method
-    // return 0;
-    return mDie.value();
+    return current_value;
   }
 
   /**
@@ -74,7 +73,7 @@ public class WalletViewModel extends ViewModel {
    */
   public void setIncrement(int increment) {
     // TODO implement method
-    mIncrement = increment;
+    increment_value = increment;
   }
 
   /**
@@ -84,7 +83,7 @@ public class WalletViewModel extends ViewModel {
    */
   public void setWinValue(int winValue) {
     // TODO implement method
-    mWinValue = winValue;
+    win_value = winValue;
   }
 
   /**
@@ -94,6 +93,12 @@ public class WalletViewModel extends ViewModel {
    */
   public void setDie(Die d) {
     // TODO implement method
-    mDie = d;
+    this.die = d;
+  }
+
+  @Override
+  protected void onCleared() {
+    super.onCleared();
+    Log.d(TAG, "onCleared");
   }
 }

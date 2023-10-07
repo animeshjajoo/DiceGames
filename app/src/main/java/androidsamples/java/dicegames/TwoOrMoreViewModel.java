@@ -1,29 +1,41 @@
 package androidsamples.java.dicegames;
 
-import java.util.List;
-import java.util.ArrayList;
+import static java.lang.Math.max;
 
 import androidx.lifecycle.ViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A {@link ViewModel} for the gambling game that allows the user to choose a game type, set a wager, and then play.
  */
 public class TwoOrMoreViewModel extends ViewModel {
 
-  private int mBalance;
-  private GameType mGameType;
-  private int mWager;
-  private List<Die> mDice;
+  private int coins, wager_amount;
+  public List<Die> dies;
+  GameType game_type;
+  private int[] freq;
 
   /**
    * No argument constructor.
    */
   public TwoOrMoreViewModel() {
-    // TODO implement method
-    mBalance = 0;
-    mGameType = null;
-    mWager = 0;
-    mDice = new ArrayList<>();
+    dies = new ArrayList<>();
+    freq = new int[7];
+    game_type = GameType.NONE;
+    coins = 0;
+    wager_amount = 0;
+  }
+
+  /**
+   * Initializes the new die Array with 4 new dies
+   *
+   */
+  public void setDie() {
+    for (int i=0;i<4;i++) {
+      addDie(new Die6());
+    }
   }
 
   /**
@@ -32,8 +44,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @return the balance
    */
   public int balance() {
-    // TODO implement method
-    return 0;
+    return coins;
   }
 
   /**
@@ -42,8 +53,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @param balance the given amount
    */
   public void setBalance(int balance) {
-    // TODO implement method
-    mBalance = balance;
+    coins = balance;
   }
 
   /**
@@ -52,9 +62,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @return the current game type
    */
   public GameType gameType() {
-    // TODO implement method
-    // return null;
-    return mGameType;
+    return game_type;
   }
 
   /**
@@ -63,8 +71,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @param gameType the game type to be set
    */
   public void setGameType(GameType gameType) {
-    // TODO implement method
-    mGameType = gameType;
+    game_type = gameType;
   }
 
   /**
@@ -73,9 +80,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @return the wager amount
    */
   public int wager() {
-    // TODO implement method
-    // return 0;
-    return mWager;
+    return wager_amount;
   }
 
   /**
@@ -84,8 +89,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @param wager the amount to be set
    */
   public void setWager(int wager) {
-    // TODO implement method
-    mWager = wager;
+    wager_amount = wager;
   }
 
   /**
@@ -95,10 +99,17 @@ public class TwoOrMoreViewModel extends ViewModel {
    *
    * @return {@code true} iff the wager set is valid
    */
-  public boolean isValidWager(){
-    if (mWager <= 0) return false;
-    int requiredBalance = mWager * (mGameType.ordinal() + 2);
-    return mBalance >= requiredBalance;
+  public boolean isValidWager() {
+    if (wager() <= 0) return false;
+
+    switch (gameType()) {
+      case TWO_ALIKE: if (2*wager() > balance()) return false; break;
+      case THREE_ALIKE: if (3*wager() > balance()) return false; break;
+      case FOUR_ALIKE: if (4*wager() > balance()) return false; break;
+      default: return false;
+    }
+
+    return true;
   }
 
   /**
@@ -107,12 +118,11 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @return the values of dice
    */
   public List<Integer> diceValues() {
-    // TODO implement method
-    List<Integer> values = new ArrayList<>();
-    for (Die die : mDice) {
-      values.add(die.value());
+    List<Integer> die_values = new ArrayList<>();
+    for (Die die:dies) {
+      die_values.add(die.value());
     }
-    return values;
+    return die_values;
   }
 
   /**
@@ -121,8 +131,7 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @param d the Die to be added
    */
   public void addDie(Die d) {
-    // TODO implement method
-    mDice.add(d);
+    dies.add(d);
   }
 
   /**
@@ -132,32 +141,64 @@ public class TwoOrMoreViewModel extends ViewModel {
    * @throws IllegalStateException if the wager or the game type was not set to a proper value.
    */
   public GameResult play() throws IllegalStateException {
-    // TODO implement method
-    if (mGameType == null || mWager <= 0) {
-      throw new IllegalStateException("Wager or game type not set properly.");
+
+    if (wager() == 0) {
+      throw new IllegalStateException("Wager not set, can't play!");
+    }
+    if (gameType() == GameType.NONE) {
+      throw new IllegalStateException("Game Type not set, can't play!");
+    }
+    if (gameType() == GameType.TWO_ALIKE && dies.size() < 2) {
+      throw new IllegalStateException("Not enough dice, can't play!");
+    }
+    if (gameType() == GameType.THREE_ALIKE && dies.size() < 3) {
+      throw new IllegalStateException("Not enough dice, can't play!");
+    }
+    if (gameType() == GameType.FOUR_ALIKE && dies.size() < 4) {
+      throw new IllegalStateException("Not enough dice, can't play!");
+    }
+    if (!isValidWager()) {
+      throw new IllegalStateException("Invalid wager, can't play!");
     }
 
-    // Roll all the dice
-    for (Die die : mDice) {
-      die.roll();
+    freq = new int[7];
+
+    for (Die i : dies) {
+      i.roll();
     }
 
-    // Check if the dice values match the game type
-    int matchCount = 0;
-    for (Integer value : diceValues()) {
-      if (value == mDice.get(0).value()) {
-        matchCount++;
+    int maxOccurrences = 0;
+    for (Die d:dies) {
+      freq[d.value()]++;
+      maxOccurrences = max(maxOccurrences, freq[d.value()]);
+    }
+
+    switch (gameType()) {
+      case TWO_ALIKE: if (maxOccurrences >= 2) {
+        coins += 2 * wager();
+        return GameResult.WIN;
       }
-    }
-
-    // Determine the result and update balance
-    int multiplier = mGameType.ordinal() + 2;  // Multiplier for winnings
-    if (matchCount == mGameType.ordinal() + 2) {
-      mBalance += mWager * multiplier;
-      return GameResult.WIN;
-    } else {
-      mBalance -= mWager * multiplier;
-      return GameResult.LOSS;
+      else {
+        coins -= 2 * wager();
+        return GameResult.LOSS;
+      }
+      case THREE_ALIKE: if (maxOccurrences >= 3) {
+        coins += 3 * wager();
+        return GameResult.WIN;
+      }
+      else {
+        coins -= 3 * wager();
+        return GameResult.LOSS;
+      }
+      case FOUR_ALIKE: if (maxOccurrences >= 4) {
+        coins += 4 * wager();
+        return GameResult.WIN;
+      }
+      else {
+        coins -= 4 * wager();
+        return GameResult.LOSS;
+      }
+      default: return GameResult.UNDECIDED;
     }
 
   }

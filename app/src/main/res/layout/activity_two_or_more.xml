@@ -95,7 +95,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editTextWager"
+            android:id="@+id/Wager"
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:autofillHints="Wager amount"
@@ -174,7 +174,7 @@
     <!-- Back and Info Buttons -->
     <LinearLayout
         android:id="@+id/linearButtons"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:orientation="horizontal"
@@ -182,34 +182,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/constraintLayoutDice">
 
+        <Button
+            android:id="@+id/buttonBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8sp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="0.1"
+            android:text="@string/back"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buttonInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8sp"
+            android:layout_weight="0.1"
+            android:text="@string/info"
+            android:textSize="18sp" />
+
     </LinearLayout>
-
-
-    <Button
-        android:id="@+id/buttonInfo"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="224dp"
-        android:layout_marginBottom="16dp"
-        android:layout_weight="1"
-        android:text="@string/info"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDice" />
-
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="0sp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="224dp"
-        android:layout_weight="1"
-        android:text="@string/back"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayoutDice"
-        app:layout_constraintVertical_bias="0.436" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

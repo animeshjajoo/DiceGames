@@ -28,8 +28,7 @@
   <string name="game_rules_and_instructions">Game Rules and Instructions</string>
   <string name="game_rules_title">Game Rules</string>
   <string name="game_rule_1">1. It\'s a high-risk, high-return game:</string>
-  <string name="game_rule_1_description"> A player betting k coins on a “2 alike” game earns 2k coins if they win or lose 2k coins if they lose the bet.
-    Similarly, 3x for “3 alike” and 4x for “4 alike” games. </string>
+  <string name="game_rule_1_description"> A player betting k coins on a “2 alike” game earns 2k coins if they win or lose 2k coins if they lose the bet. Similarly, 3x for “3 alike” and 4x for “4 alike” games.</string>
   <string name="game_rule_2">2. Wallet Balance Limit:</string>
   <string name="game_rule_2_description"> You must check if the wallet balance is large enough to cover any losses based on the wager amount entered. </string>
   <string name="game_rule_2_example">Ex.: if my balance is 10:</string>

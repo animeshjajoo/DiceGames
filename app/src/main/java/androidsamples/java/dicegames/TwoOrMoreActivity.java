@@ -1,137 +1,142 @@
 package androidsamples.java.dicegames;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+
 public class TwoOrMoreActivity extends AppCompatActivity {
 
-  private TwoOrMoreViewModel viewModel;
-  private TextView txtCoins;
-  private Button btnTwoAlike, btnThreeAlike, btnFourAlike, btnGo, btnBack, btnInfo;
-  private EditText Wager;
-  private Button die1, die2, die3, die4;
+  static final String MAIN_BALANCE_RETURN = "MAIN_BALANCE_RETURN";
+  TwoOrMoreViewModel TwoOrMoreVM;
+  Button go, back, info;
+  TextView die_one, die_two, die_three, die_four, txt_Coins;
 
+  RadioGroup radioGroup;
+  RadioButton radioButton;
+  GameResult game_result_toast;
+  EditText wager_txt;
+  @SuppressLint("NonConstantResourceId")
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_two_or_more);
 
-    viewModel = new TwoOrMoreViewModel();
+    TwoOrMoreVM = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
 
-    // Initialize UI components
-    txtCoins = findViewById(R.id.textViewCoins);
-    btnTwoAlike = findViewById(R.id.radioButton2Alike);
-    btnThreeAlike = findViewById(R.id.radioButton3Alike);
-    btnFourAlike = findViewById(R.id.radioButton4Alike);
-    Wager = findViewById(R.id.editTextWager);
-    btnGo = findViewById(R.id.buttonGo);
-    btnBack = findViewById(R.id.buttonBack);
-    btnInfo = findViewById(R.id.buttonInfo);
-    die1 = findViewById(R.id.buttonDie1);
-    die2 = findViewById(R.id.buttonDie2);
-    die3 = findViewById(R.id.buttonDie3);
-    die4 = findViewById(R.id.buttonDie4);
+    int balance = getIntent().getIntExtra(WalletActivity.MAIN_BALANCE, 0);
+    TwoOrMoreVM.setBalance(balance);
 
-    // Find the "back" button by its ID
-    Button backButton = findViewById(R.id.buttonBack);
+    TwoOrMoreVM.setDie();
+    txt_Coins = findViewById(R.id.txt_coins);
+    go = findViewById(R.id.btn_go);
+    back = findViewById(R.id.btn_back);
+    info = findViewById(R.id.btn_info);
+    die_one = findViewById(R.id.die1);
+    die_two = findViewById(R.id.die2);
+    die_three = findViewById(R.id.die3);
+    die_four = findViewById(R.id.die4);
+    wager_txt = findViewById(R.id.Wager);
+    radioGroup = findViewById(R.id.radioGroup);
 
-    // Set an OnClickListener for the button
-    backButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        // Create an Intent to navigate back to the WalletActivity
-        Intent intent = new Intent(TwoOrMoreActivity.this, WalletActivity.class);
-        startActivity(intent);
+
+    go.setOnClickListener(v -> {
+      int selected = radioGroup.getCheckedRadioButtonId();
+      radioButton = findViewById(selected);
+
+      switch (selected) {
+        case R.id.alike_2:
+          TwoOrMoreVM.setGameType(GameType.TWO_ALIKE);
+          break;
+        case R.id.alike_3:
+          TwoOrMoreVM.setGameType(GameType.THREE_ALIKE);
+          break;
+        case R.id.alike_4:
+          TwoOrMoreVM.setGameType(GameType.FOUR_ALIKE);
+          break;
+        default:
+          Toast.makeText(this, "Select a Game Type", Toast.LENGTH_SHORT).show();
+          return;
+      }
+
+      if (wager_txt.getText().toString().equals("")) {
+        Toast.makeText(this, "Enter a Wager", Toast.LENGTH_SHORT).show();
+        return;
+      }
+
+      try {
+        TwoOrMoreVM.setWager((Integer.parseInt(wager_txt.getText().toString())));
+      } catch (NumberFormatException e){
+        Toast.makeText(this, "Wager not a number!", Toast.LENGTH_SHORT).show();
+        return;
+      }
+
+      if (!TwoOrMoreVM.isValidWager()) {
+        Toast.makeText(this, "Wager is invalid", Toast.LENGTH_SHORT).show();
+      } else {
+
+        game_result_toast = TwoOrMoreVM.play();
+
+        if (game_result_toast == GameResult.UNDECIDED) {
+          throw new IllegalStateException("Game Result can't be decided!");
+        }
+
+        if (game_result_toast == GameResult.WIN)
+          Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
+        else
+          Toast.makeText(this, "Loss!", Toast.LENGTH_SHORT).show();
+
+        wager_txt.setText("");
+
+        // Update UI
+        die_one.setText(String.valueOf(TwoOrMoreVM.dies.get(0).value()));
+        die_two.setText(String.valueOf(TwoOrMoreVM.dies.get(1).value()));
+        die_three.setText(String.valueOf(TwoOrMoreVM.dies.get(2).value()));
+        die_four.setText(String.valueOf(TwoOrMoreVM.dies.get(3).value()));
+        txt_Coins.setText(String.valueOf(TwoOrMoreVM.balance()));
+
       }
     });
 
-    Button infoButton = findViewById(R.id.buttonInfo);
-
-    infoButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Intent intent = new Intent(TwoOrMoreActivity.this, InformationOfDiceGamesActivity.class);
-        startActivity(intent);
-      }
-    });
-
-//    // Set click listeners for the game type buttons
-//    btnTwoAlike.setOnClickListener(v -> {
-//      viewModel.setGameType(GameType.TWO_ALIKE);
-//      updateUI();
-//    });
-//
-//    btnThreeAlike.setOnClickListener(v -> {
-//      viewModel.setGameType(GameType.THREE_ALIKE);
-//      updateUI();
-//    });
-//
-//    btnFourAlike.setOnClickListener(v -> {
-//      viewModel.setGameType(GameType.FOUR_ALIKE);
-//      updateUI();
-//    });
-
-    // Set click listener for the "Go" button
-//    btnGo.setOnClickListener(v -> {
-//      String wagerStr = Wager.getText().toString();
-//      if (!wagerStr.isEmpty()) {
-//        int wager = Integer.parseInt(wagerStr);
-//        viewModel.setWager(wager);
-//        if (viewModel.isValidWager()) {
-//          // Roll the dice and update UI with the result
-//          GameResult result = viewModel.play();
-//          updateDiceUI(viewModel.diceValues());
-//          updateUI();
-//          // Show a toast message with the game result
-//          showGameResultToast(result);
-//        } else {
-//          Toast.makeText(this, "Invalid wager amount.", Toast.LENGTH_SHORT).show();
-//        }
-//      } else {
-//        Toast.makeText(this, "Please enter a wager amount.", Toast.LENGTH_SHORT).show();
-//      }
-//    });
-//
-//    // Set click listeners for the "Back" and "Info" buttons
-//    btnBack.setOnClickListener(v -> onBackPressed());
-//    btnInfo.setOnClickListener(v -> {
-//      // Implement the logic to show game rules or information activity here
-//      // You can launch a new activity or display a dialog with game rules
-//    });
-//
-
-    // Initialize the UI
-//    updateUI();
-//  }
-////
-//  private void updateUI(){
-//    txtCoins.setText(getString(R.string.coins_format, viewModel.balance()));
-//    Wager.setText(String.valueOf(viewModel.wager()));
-//  }
-
-
-//
-//  private void showGameResultToast(GameResult result) {
-//    String message;
-//    switch (result) {
-//      case WIN:
-//        message = "Congratulations! You won.";
-//        break;
-//      case LOSE:
-//        message = "Sorry, you lost.";
-//        break;
-//      default:
-//        message = "Game result: " + result.toString();
-//        break;
-//    }
-//    Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-//  }
+    // Update UI
+    die_one.setText(String.valueOf(TwoOrMoreVM.dies.get(0).value()));
+    die_two.setText(String.valueOf(TwoOrMoreVM.dies.get(1).value()));
+    die_three.setText(String.valueOf(TwoOrMoreVM.dies.get(2).value()));
+    die_four.setText(String.valueOf(TwoOrMoreVM.dies.get(3).value()));
+    txt_Coins.setText(String.valueOf(TwoOrMoreVM.balance()));
   }
+
+  public void returnToWallet(View view) {
+    Intent change = new Intent(this, WalletActivity.class);
+    int TwoOrMoreBalance = TwoOrMoreVM.balance();
+    change.putExtra(MAIN_BALANCE_RETURN, TwoOrMoreBalance);
+    setResult(RESULT_OK, change);
+    finish();
+  }
+
+  @Override
+  public void onBackPressed() {
+    Intent change = new Intent(this, WalletActivity.class);
+    int TwoOrMoreBalance = TwoOrMoreVM.balance();
+    change.putExtra(MAIN_BALANCE_RETURN, TwoOrMoreBalance);
+    setResult(RESULT_CANCELED, change);
+    finish();
+    super.onBackPressed();
+  }
+
+  public void getInfo(View view) {
+    Intent info = new Intent(this, InformationOfDiceGamesActivity.class);
+    startActivity(info);
+  }
+
 }
