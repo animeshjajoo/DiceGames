@@ -99,7 +99,7 @@
             android:layout_width="230dp"
             android:layout_height="wrap_content"
             android:autofillHints="Wager amount"
-            android:hint="@string/enter_wager_hint"
+            android:hint="@string/Wager"
             android:inputType="number"
             android:padding="15sp"
             android:textSize="18sp" />

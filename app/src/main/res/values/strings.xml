@@ -11,7 +11,7 @@
 
   <string name="wager_label">  Wager:</string>
 
-  <string name="enter_wager_hint">Enter Wager</string>
+  <string name="Wager">Enter Wager</string>
 
   <string name="go">GO</string>
 
@@ -23,6 +23,7 @@
   <string name="back">Back</string>
 
   <string name="info">Info</string>
+  <string name="nullstr"> </string>
 
   <!-- Game Rules -->
   <string name="game_rules_and_instructions">Game Rules and Instructions</string>

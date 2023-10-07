@@ -1,5 +1,8 @@
 package androidsamples.java.dicegames;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,16 +14,13 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 
 public class TwoOrMoreActivity extends AppCompatActivity {
 
   static final String MAIN_BALANCE_RETURN = "MAIN_BALANCE_RETURN";
-  TwoOrMoreViewModel TwoOrMoreVM;
+  TwoOrMoreViewModel tmvm;
   Button go, back, info;
-  TextView die_one, die_two, die_three, die_four, txt_Coins;
+  TextView one_die, two_die, three_die, four_die, txtCoins;
 
   RadioGroup radioGroup;
   RadioButton radioButton;
@@ -32,45 +32,20 @@ public class TwoOrMoreActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_two_or_more);
 
-    Button infoButton = findViewById(R.id.buttonInfo);
-
-    // Set an OnClickListener for the Info button
-    infoButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        // Create an Intent to start InfoActivity
-        Intent infoIntent = new Intent(TwoOrMoreActivity.this, InformationOfDiceGamesActivity.class);
-        startActivity(infoIntent);
-      }
-    });
-
-    // Find the "back" button by its ID
-    Button backButton = findViewById(R.id.buttonBack);
-
-    // Set an OnClickListener for the button
-    backButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        // Create an Intent to navigate back to the WalletActivity
-        Intent intent = new Intent(TwoOrMoreActivity.this, WalletActivity.class);
-        startActivity(intent);
-      }
-    });
-
-    TwoOrMoreVM = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
+    tmvm = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
 
     int balance = getIntent().getIntExtra(WalletActivity.MAIN_BALANCE, 0);
-    TwoOrMoreVM.setBalance(balance);
+    tmvm.setBalance(balance);
 
-    TwoOrMoreVM.setDie();
-    txt_Coins = findViewById(R.id.txt_coins);
+    tmvm.setDie();
+    txtCoins = findViewById(R.id.txt_coins);
     go = findViewById(R.id.btn_go);
     back = findViewById(R.id.btn_back);
     info = findViewById(R.id.btn_info);
-    die_one = findViewById(R.id.die1);
-    die_two = findViewById(R.id.die2);
-    die_three = findViewById(R.id.die3);
-    die_four = findViewById(R.id.die4);
+    one_die = findViewById(R.id.die1);
+    two_die = findViewById(R.id.die2);
+    three_die = findViewById(R.id.die3);
+    four_die = findViewById(R.id.die4);
     wager_txt = findViewById(R.id.Wager);
     radioGroup = findViewById(R.id.radioGroup);
 
@@ -81,13 +56,13 @@ public class TwoOrMoreActivity extends AppCompatActivity {
 
       switch (selected) {
         case R.id.alike_2:
-          TwoOrMoreVM.setGameType(GameType.TWO_ALIKE);
+          tmvm.setGameType(GameType.TWO_ALIKE);
           break;
         case R.id.alike_3:
-          TwoOrMoreVM.setGameType(GameType.THREE_ALIKE);
+          tmvm.setGameType(GameType.THREE_ALIKE);
           break;
         case R.id.alike_4:
-          TwoOrMoreVM.setGameType(GameType.FOUR_ALIKE);
+          tmvm.setGameType(GameType.FOUR_ALIKE);
           break;
         default:
           Toast.makeText(this, "Select a Game Type", Toast.LENGTH_SHORT).show();
@@ -100,17 +75,17 @@ public class TwoOrMoreActivity extends AppCompatActivity {
       }
 
       try {
-        TwoOrMoreVM.setWager((Integer.parseInt(wager_txt.getText().toString())));
+        tmvm.setWager((Integer.parseInt(wager_txt.getText().toString())));
       } catch (NumberFormatException e){
         Toast.makeText(this, "Wager not a number!", Toast.LENGTH_SHORT).show();
         return;
       }
 
-      if (!TwoOrMoreVM.isValidWager()) {
+      if (!tmvm.isValidWager()) {
         Toast.makeText(this, "Wager is invalid", Toast.LENGTH_SHORT).show();
       } else {
 
-        game_result_toast = TwoOrMoreVM.play();
+        game_result_toast = tmvm.play();
 
         if (game_result_toast == GameResult.UNDECIDED) {
           throw new IllegalStateException("Game Result can't be decided!");
@@ -124,27 +99,27 @@ public class TwoOrMoreActivity extends AppCompatActivity {
         wager_txt.setText("");
 
         // Update UI
-        die_one.setText(String.valueOf(TwoOrMoreVM.dies.get(0).value()));
-        die_two.setText(String.valueOf(TwoOrMoreVM.dies.get(1).value()));
-        die_three.setText(String.valueOf(TwoOrMoreVM.dies.get(2).value()));
-        die_four.setText(String.valueOf(TwoOrMoreVM.dies.get(3).value()));
-        txt_Coins.setText(String.valueOf(TwoOrMoreVM.balance()));
+        one_die.setText(String.valueOf(tmvm.dies.get(0).value()));
+        two_die.setText(String.valueOf(tmvm.dies.get(1).value()));
+        three_die.setText(String.valueOf(tmvm.dies.get(2).value()));
+        four_die.setText(String.valueOf(tmvm.dies.get(3).value()));
+        txtCoins.setText(String.valueOf(tmvm.balance()));
 
       }
     });
 
     // Update UI
-    die_one.setText(String.valueOf(TwoOrMoreVM.dies.get(0).value()));
-    die_two.setText(String.valueOf(TwoOrMoreVM.dies.get(1).value()));
-    die_three.setText(String.valueOf(TwoOrMoreVM.dies.get(2).value()));
-    die_four.setText(String.valueOf(TwoOrMoreVM.dies.get(3).value()));
-    txt_Coins.setText(String.valueOf(TwoOrMoreVM.balance()));
+    one_die.setText(String.valueOf(tmvm.dies.get(0).value()));
+    two_die.setText(String.valueOf(tmvm.dies.get(1).value()));
+    three_die.setText(String.valueOf(tmvm.dies.get(2).value()));
+    four_die.setText(String.valueOf(tmvm.dies.get(3).value()));
+    txtCoins.setText(String.valueOf(tmvm.balance()));
   }
 
   public void returnToWallet(View view) {
     Intent change = new Intent(this, WalletActivity.class);
-    int TwoOrMoreBalance = TwoOrMoreVM.balance();
-    change.putExtra(MAIN_BALANCE_RETURN, TwoOrMoreBalance);
+    int tmp = tmvm.balance();
+    change.putExtra(MAIN_BALANCE_RETURN, tmp);
     setResult(RESULT_OK, change);
     finish();
   }
@@ -152,8 +127,8 @@ public class TwoOrMoreActivity extends AppCompatActivity {
   @Override
   public void onBackPressed() {
     Intent change = new Intent(this, WalletActivity.class);
-    int TwoOrMoreBalance = TwoOrMoreVM.balance();
-    change.putExtra(MAIN_BALANCE_RETURN, TwoOrMoreBalance);
+    int tmp = tmvm.balance();
+    change.putExtra(MAIN_BALANCE_RETURN, tmp);
     setResult(RESULT_CANCELED, change);
     finish();
     super.onBackPressed();

@@ -2,10 +2,10 @@ package androidsamples.java.dicegames;
 
 import static java.lang.Math.max;
 
-import androidx.lifecycle.ViewModel;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.lifecycle.ViewModel;
 
 /**
  * A {@link ViewModel} for the gambling game that allows the user to choose a game type, set a wager, and then play.
