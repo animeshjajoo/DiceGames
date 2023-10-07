@@ -32,6 +32,31 @@ public class TwoOrMoreActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_two_or_more);
 
+    Button infoButton = findViewById(R.id.buttonInfo);
+
+    // Set an OnClickListener for the Info button
+    infoButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // Create an Intent to start InfoActivity
+        Intent infoIntent = new Intent(TwoOrMoreActivity.this, InformationOfDiceGamesActivity.class);
+        startActivity(infoIntent);
+      }
+    });
+
+    // Find the "back" button by its ID
+    Button backButton = findViewById(R.id.buttonBack);
+
+    // Set an OnClickListener for the button
+    backButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // Create an Intent to navigate back to the WalletActivity
+        Intent intent = new Intent(TwoOrMoreActivity.this, WalletActivity.class);
+        startActivity(intent);
+      }
+    });
+
     TwoOrMoreVM = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
 
     int balance = getIntent().getIntExtra(WalletActivity.MAIN_BALANCE, 0);

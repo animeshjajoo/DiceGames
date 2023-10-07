@@ -20,13 +20,25 @@ public class WalletActivity extends AppCompatActivity {
   private WalletViewModel vm;
   private static final String TAG = "WalletActivity";
   static final String MAIN_BALANCE = "MAIN_BALANCE";
-  private static final int TOM_REQUEST_CODE = 2;
+  private static final int REQUEST_CODE = 2;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     Log.d(TAG, "OnCreate");
     setContentView(R.layout.activity_wallet);
+
+    Button twoOrMoreButton = findViewById(R.id.button_two_or_more);
+
+    // Set an OnClickListener for the button
+    twoOrMoreButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        // Create an Intent to navigate to the TwoOrMoreActivity
+        Intent intent = new Intent(WalletActivity.this, TwoOrMoreActivity.class);
+        startActivity(intent);
+      }
+    });
 
     vm = new ViewModelProvider(this).get(WalletViewModel.class);
 
@@ -55,14 +67,14 @@ public class WalletActivity extends AppCompatActivity {
   public void launchTwoOrMore(View view){
     Intent intent = new Intent(this, TwoOrMoreActivity.class);
     intent.putExtra(MAIN_BALANCE, vm.balance());
-    startActivityForResult(intent, TOM_REQUEST_CODE);
+    startActivityForResult(intent, REQUEST_CODE);
   }
 
   @Override
   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     Log.d(TAG, "onActivityResult");
-    if(requestCode == TOM_REQUEST_CODE && (resultCode == RESULT_OK || resultCode == RESULT_CANCELED)){
+    if(requestCode == REQUEST_CODE && (resultCode == RESULT_OK || resultCode == RESULT_CANCELED)){
       if (data != null) {
         int balance = data.getIntExtra(TwoOrMoreActivity.MAIN_BALANCE_RETURN,0);
         Log.d(TAG, "Updated Balance = " + balance);
