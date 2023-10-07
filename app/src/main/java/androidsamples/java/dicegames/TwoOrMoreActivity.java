@@ -1,5 +1,7 @@
 package androidsamples.java.dicegames;
 
+import static androidsamples.java.dicegames.WalletActivity.MAIN_BALANCE;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +37,7 @@ public class TwoOrMoreActivity extends AppCompatActivity {
     Log.d("TwoActivity","TwoOrMoreButton");
     TwoOrMoreVM = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
 
-    int balance = getIntent().getIntExtra(WalletActivity.MAIN_BALANCE, 0);
+    int balance = getIntent().getIntExtra(MAIN_BALANCE, 0);
     TwoOrMoreVM.setBalance(balance);
 
     TwoOrMoreVM.setDie();
@@ -46,7 +48,7 @@ public class TwoOrMoreActivity extends AppCompatActivity {
     die1 = findViewById(R.id.buttonDie1);
     die2 = findViewById(R.id.buttonDie2);
     die3 = findViewById(R.id.buttonDie3);
-    die4 = findViewById(R.id.ButtonDie4);
+    die4 = findViewById(R.id.buttonDie4);
     wager_txt = findViewById(R.id.Wager);
     radioGroup = findViewById(R.id.radioGroup);
 
@@ -116,19 +118,18 @@ public class TwoOrMoreActivity extends AppCompatActivity {
     txtCoins.setText(String.valueOf(TwoOrMoreVM.balance()));
   }
 
-  public void returnToWallet(View view) {
-    Intent change = new Intent(this, WalletActivity.class);
-    int tmp = TwoOrMoreVM.balance();
-    change.putExtra(MAIN_BALANCE_RETURN, tmp);
-    setResult(RESULT_OK, change);
-    finish();
+  public void BacktoWalletActivity(View v) {
+    // Create an Intent to navigate to the TwoOrMoreActivity
+    Intent intent = new Intent(TwoOrMoreActivity.this, WalletActivity.class);
+    intent.putExtra(MAIN_BALANCE_RETURN, TwoOrMoreVM.balance());
+    startActivity(intent);
   }
 
   @Override
   public void onBackPressed() {
     Intent change = new Intent(this, WalletActivity.class);
-    int tmp = TwoOrMoreVM.balance();
-    change.putExtra(MAIN_BALANCE_RETURN, tmp);
+    int temp = TwoOrMoreVM.balance();
+    change.putExtra(MAIN_BALANCE_RETURN, temp);
     setResult(RESULT_CANCELED, change);
     finish();
     super.onBackPressed();

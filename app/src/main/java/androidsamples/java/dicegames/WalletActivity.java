@@ -17,7 +17,7 @@ import java.util.Locale;
 public class WalletActivity extends AppCompatActivity {
   private Button btnDie;
   private TextView txtBalance;
-  private WalletViewModel vm;
+  private WalletViewModel WalletVM;
   private static final String TAG = "WalletActivity";
   static final String MAIN_BALANCE = "MAIN_BALANCE";
   private static final int REQUEST_CODE = 2;
@@ -28,21 +28,20 @@ public class WalletActivity extends AppCompatActivity {
     Log.d(TAG, "OnCreate");
     setContentView(R.layout.activity_wallet);
 
-    Button button_two_or_more = findViewById(R.id.button_two_or_more);
+    int balance = getIntent().getIntExtra(TwoOrMoreActivity.MAIN_BALANCE_RETURN, 0);
+    WalletVM.setBalance(balance);
 
-    // Set an OnClickListener for the button
-
-    vm = new ViewModelProvider(this).get(WalletViewModel.class);
+    WalletVM = new ViewModelProvider(this).get(WalletViewModel.class);
 
     btnDie = findViewById(R.id.btn_die);
     txtBalance = findViewById(R.id.txt_balance);
 
     btnDie.setOnClickListener(v -> {
       Log.d("WalletActivity","Die");
-      vm.setDie(new Die6());
-      vm.rollDie();
+      WalletVM.setDie(new Die6());
+      WalletVM.rollDie();
       updateUI();
-      if (vm.dieValue() == 6) Toast.makeText(this, R.string.congrats, Toast.LENGTH_SHORT).show();
+      if (WalletVM.dieValue() == 6) Toast.makeText(this, R.string.congrats, Toast.LENGTH_SHORT).show();
     });
 
     updateUI();
@@ -50,25 +49,16 @@ public class WalletActivity extends AppCompatActivity {
 
   public void onClickofTwoorMore(View v) {
     // Create an Intent to navigate to the TwoOrMoreActivity
-    Log.d("WalletActivity","TwoOrMoreButton");
     Intent intent = new Intent(this, TwoOrMoreActivity.class);
-    intent.putExtra(MAIN_BALANCE,txtBalance.toString());
+    intent.putExtra(MAIN_BALANCE, WalletVM.balance());
     startActivity(intent);
   }
 
   void updateUI() {
-    btnDie.setText(String.format(Locale.ENGLISH, "%d", vm.dieValue()));
-    txtBalance.setText(String.format(Locale.ENGLISH, "%s %d", getString(R.string.coins), vm.balance()));
+    btnDie.setText(String.format(Locale.ENGLISH, "%d", WalletVM.dieValue()));
+    txtBalance.setText(String.format(Locale.ENGLISH, "%s %d", getString(R.string.coins), WalletVM.balance()));
     Log.d(TAG, "Die Value = " + btnDie.getText());
     Log.d(TAG, "Balance = " + txtBalance.getText());
-  }
-
-
-
-  public void launchTwoOrMore(View view){
-    Intent intent = new Intent(this, TwoOrMoreActivity.class);
-    intent.putExtra(MAIN_BALANCE, vm.balance());
-    startActivityForResult(intent, REQUEST_CODE);
   }
 
   @Override
@@ -79,7 +69,7 @@ public class WalletActivity extends AppCompatActivity {
       if (data != null) {
         int balance = data.getIntExtra(TwoOrMoreActivity.MAIN_BALANCE_RETURN,0);
         Log.d(TAG, "Updated Balance = " + balance);
-        vm.setBalance(balance);
+        WalletVM.setBalance(balance);
         updateUI();
       }
     }

@@ -190,6 +190,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="0.1"
             android:text="@string/back"
+            android:onClick="BacktoWalletActivity"
             android:textSize="18sp" />
 
         <Button
@@ -200,6 +201,7 @@
             android:layout_marginEnd="8sp"
             android:layout_weight="0.1"
             android:text="@string/info"
+            android:onClick="getInfo"
             android:textSize="18sp" />
 
     </LinearLayout>
