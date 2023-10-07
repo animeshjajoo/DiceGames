@@ -6,58 +6,39 @@
     android:layout_height="match_parent"
     tools:context=".WalletActivity">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/action_tool_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="?attr/colorPrimary">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-    </androidx.appcompat.widget.Toolbar>
-
     <Button
         android:id="@+id/button_two_or_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:text="@string/two_or_more"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.138"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_die"
-        app:layout_constraintVertical_bias="0.0" />
+        android:onClick="onClickofTwoorMore"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewCoins"
+        android:id="@+id/txt_balance"
         android:layout_width="107dp"
         android:layout_height="63dp"
+        android:layout_marginTop="72dp"
         android:padding="20sp"
         android:text="@string/coins"
         android:textAlignment="center"
         android:textSize="16sp"
         android:textStyle="bold"
-
-        app:layout_constraintBottom_toTopOf="@id/btn_die"
+        app:layout_constraintBottom_toTopOf="@+id/btn_die"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.597"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.608" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_die"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
+        android:layout_marginBottom="72dp"
         android:background="?attr/colorPrimary"
         android:onClick="rollDie"
         android:paddingLeft="50sp"
@@ -66,10 +47,11 @@
         android:paddingBottom="20sp"
 
         android:text="@string/zero"
-        android:textColor="?attr/colorSecondary"
+        android:textColor="@color/white"
         android:textSize="60sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
         app:layout_constraintStart_toStartOf="parent" />
 
 

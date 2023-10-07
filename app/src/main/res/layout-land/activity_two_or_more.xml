@@ -3,12 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal"
-    android:layout_marginBottom="69dp"
+    android:layout_marginBottom="4sp"
     tools:context=".TwoOrMoreActivity">
-
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -103,7 +102,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25sp"
             android:gravity="center"
             android:padding="10sp">
 
@@ -111,20 +109,22 @@
                 android:id="@+id/buttonBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                android:layout_marginEnd="15sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginEnd="10sp"
                 android:minHeight="60sp"
                 android:text="@string/back"
+                android:onClick="BacktoWalletActivity"
                 tools:ignore="ButtonStyle" />
 
             <Button
                 android:id="@+id/buttonInfo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15sp"
-                android:layout_marginTop="15sp"
+                android:layout_marginStart="10sp"
+                android:layout_marginTop="10sp"
                 android:minHeight="60sp"
                 android:text="@string/info"
+                android:onClick="getInfo"
                 tools:ignore="ButtonStyle" />
 
         </LinearLayout>
@@ -133,99 +133,79 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="339dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginStart="15sp"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayoutDice"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_marginTop="20sp"
+            app:layout_constraintTop_toBottomOf="@id/linearWager"
+            tools:layout_editor_absoluteX="16dp">
 
-            <TextView
+            <!-- Die 1 -->
+            <Button
                 android:id="@+id/buttonDie1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10sp"
-                android:layout_marginTop="20sp"
-                android:layout_marginEnd="5sp"
-                android:layout_marginBottom="10sp"
-                android:background="#5528A5"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:minWidth="128sp"
-                android:minHeight="128sp"
-                android:text="@string/zero"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="70sp" />
+                android:padding="40sp"
+                android:text="@string/die_1"
+                android:textSize="18sp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/buttonDie2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAccessibility="no"/>
 
-            <TextView
+            <!-- Die 2 -->
+            <Button
                 android:id="@+id/buttonDie2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="3dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:background="#5528A5"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:minWidth="128dp"
-                android:minHeight="128dp"
-                android:text="@string/zero"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="70sp" />
+                android:padding="40sp"
+                android:text="@string/die_2"
+                android:textSize="18sp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/buttonDie1"
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAccessibility="no"/>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:gravity="center">
-
-            <TextView
+            <!-- Die 3 -->
+            <Button
                 android:id="@+id/buttonDie3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15sp"
-                android:layout_marginEnd="5sp"
-                android:background="#5528A5"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:minWidth="128sp"
-                android:minHeight="128sp"
-                android:text="@string/zero"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="70sp" />
+                android:layout_marginTop="16sp"
+                android:padding="40sp"
+                android:text="@string/die_3"
+                android:textSize="18sp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toStartOf="@id/buttonDie4"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/buttonDie1"
+                android:importantForAccessibility="no"/>
 
-            <TextView
-                android:id="@+id/ButtonDie4"
+            <!-- Die 4 -->
+            <Button
+                android:id="@+id/buttonDie4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5sp"
-                android:layout_marginEnd="15sp"
-                android:background="#5528A5"
-                android:backgroundTint="@color/purple_500"
-                android:gravity="center"
-                android:importantForAccessibility="no"
-                android:minWidth="128sp"
-                android:minHeight="128sp"
-                android:text="@string/zero"
-                android:textAlignment="center"
-                android:textColor="#FFFFFF"
-                android:textSize="70sp" />
+                android:layout_marginTop="16sp"
+                android:padding="40sp"
+                android:text="@string/die_4"
+                android:textSize="18sp"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/buttonDie3"
+                app:layout_constraintTop_toBottomOf="@id/buttonDie2"
+                android:importantForAccessibility="no"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

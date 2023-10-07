@@ -16,30 +16,20 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="16dp"
-            android:text="@string/game_rules_and_instructions"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/textViewGameRulesTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="8sp"
             android:text="@string/game_rules_title"
-            android:textSize="14sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewGameRule1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginStart="6sp"
+            android:layout_marginBottom="4sp"
             android:text="@string/game_rule_1"
             android:textSize="13sp"
             android:textStyle="bold" />
@@ -49,9 +39,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/game_rule_1_description"
-            android:textSize="13sp" />
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/textViewGameRule2"
@@ -60,47 +50,29 @@
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"
             android:text="@string/game_rule_2"
-            android:textSize="14sp"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewGameRule2Description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginStart="8sp"
+            android:layout_marginBottom="8sp"
             android:text="@string/game_rule_2_description"
-            android:textSize="13sp" />
+            android:textSize="11sp" />
 
-        <TextView
-            android:id="@+id/textViewGameRule2Example"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/game_rule_2_example"
-            android:textSize="13sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/textViewGameRule2ExampleDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="16dp"
-            android:text="@string/game_rule_2_example_description"
-            android:textSize="12sp"
-            android:textStyle="bold" />
 
         <Button
             android:id="@+id/buttonBackToGame"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10sp"
-            android:padding="8sp"
+            android:layout_marginTop="16sp"
+            android:padding="14sp"
             android:text="@string/back_to_game_button"
-            android:textSize="18sp" />
+            android:textSize="10sp"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -125,7 +97,7 @@
             android:layout_height="wrap_content"
             android:text="@string/gameplay_instruction_1"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"/>
 
@@ -134,9 +106,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gameplay_instruction_1_description"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:id="@+id/textViewGameplayInstruction2"
@@ -144,7 +116,7 @@
             android:layout_height="wrap_content"
             android:text="@string/gameplay_instruction_2"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"/>
 
@@ -153,9 +125,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gameplay_instruction_2_description"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:id="@+id/textViewGameplayInstruction3"
@@ -163,7 +135,7 @@
             android:layout_height="wrap_content"
             android:text="@string/gameplay_instruction_3"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="13sp"
             android:layout_marginStart="8dp"
             android:layout_marginBottom="4dp"/>
 
@@ -172,37 +144,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/gameplay_instruction_3_description"
-            android:textSize="15sp"
+            android:textSize="12sp"
             android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="16dp"/>
 
         <TextView
             android:id="@+id/textViewToastMessage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/toast_message"
-            android:textSize="14sp"
+            android:textSize="12sp"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="8dp"/>
 
-        <TextView
-            android:id="@+id/textViewGameplayInstruction4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/gameplay_instruction_4"
-            android:textStyle="bold"
-            android:textSize="15sp"
-            android:layout_marginStart="8dp"
-            android:layout_marginBottom="4dp"/>
 
-        <TextView
-            android:id="@+id/textViewGameplayInstruction4Description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/toast_message_description"
-            android:textSize="15sp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="8dp"/>
+
+
 
         <!-- Add your other gameplay instruction TextViews here -->
 

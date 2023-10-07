@@ -1,16 +1,16 @@
 package androidsamples.java.dicegames;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TwoOrMoreViewModelMockitoTest {
@@ -80,6 +80,19 @@ public class TwoOrMoreViewModelMockitoTest {
     when(d3.value()).thenReturn(2);
 
     m.setGameType(GameType.THREE_ALIKE);
+    m.setBalance(100);
+    m.setWager(5);
+    assertThat(m.play(), is(GameResult.WIN));
+  }
+
+  @Test
+  public void fourAlikeWinsWhenD1D2D3Same() {
+    when(d1.value()).thenReturn(5);
+    when(d2.value()).thenReturn(5);
+    when(d3.value()).thenReturn(5);
+    when(d4.value()).thenReturn(5);
+
+    m.setGameType(GameType.FOUR_ALIKE);
     m.setBalance(100);
     m.setWager(5);
     assertThat(m.play(), is(GameResult.WIN));

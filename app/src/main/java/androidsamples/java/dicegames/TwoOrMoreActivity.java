@@ -21,7 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 public class TwoOrMoreActivity extends AppCompatActivity {
 
   static final String MAIN_BALANCE_RETURN = "MAIN_BALANCE_RETURN";
-  TwoOrMoreViewModel TwoOrMoreVM;
+  public TwoOrMoreViewModel TwoOrMoreVM;
   Button go, back, info;
   TextView die1, die2, die3, die4, txtCoins;
 
@@ -34,11 +34,14 @@ public class TwoOrMoreActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_two_or_more);
+
     Log.d("TwoActivity","TwoOrMoreButton");
     TwoOrMoreVM = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
-
+  if(savedInstanceState == null){
     int balance = getIntent().getIntExtra(MAIN_BALANCE, 0);
     TwoOrMoreVM.setBalance(balance);
+  }
+
 
     TwoOrMoreVM.setDie();
     txtCoins = findViewById(R.id.textViewCoins);
@@ -67,7 +70,7 @@ public class TwoOrMoreActivity extends AppCompatActivity {
           TwoOrMoreVM.setGameType(GameType.FOUR_ALIKE);
           break;
         default:
-          Toast.makeText(this, "Select a Game Type", Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, "Select any Game Type", Toast.LENGTH_SHORT).show();
           return;
       }
 
@@ -94,9 +97,9 @@ public class TwoOrMoreActivity extends AppCompatActivity {
         }
 
         if (game_result_toast == GameResult.WIN)
-          Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, "Congratulations! You Won!", Toast.LENGTH_LONG).show();
         else
-          Toast.makeText(this, "Loss!", Toast.LENGTH_SHORT).show();
+          Toast.makeText(this, "Oops! You Lost!", Toast.LENGTH_LONG).show();
 
         wager_txt.setText("");
 
