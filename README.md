@@ -32,6 +32,9 @@ Our app has no obvious bugs at the time of writing this README.
 
 Testing: We initially began by writing the code without employing a test-driven approach. Instead, we opted for a user-testing approach, testing the app with some of our friends to identify bugs and collect feedback. We developed our logic using a basic UI, tested the app, addressed the identified bugs, and iteratively repeated this process until our app functioned flawlessly across all conditions. 
 
+### Accessibility
+-To ensure accessibility in our Android app, we utilized Espresso for testing. We've added 7 instrumented test cases.
+
 Pair Programming: 4/5 </br>
 Assignment Difficulty: 8/10 </br>
 
