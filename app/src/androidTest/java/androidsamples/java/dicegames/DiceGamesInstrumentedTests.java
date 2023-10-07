@@ -3,18 +3,17 @@ package androidsamples.java.dicegames;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.clearText;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.typeText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static androidx.test.runner.lifecycle.Stage.RESUMED;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.widget.TextView;
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
@@ -55,27 +54,8 @@ public class DiceGamesInstrumentedTests {
   public ActivityScenarioRule<WalletActivity> walletActivityRule = new ActivityScenarioRule<>(WalletActivity.class);
 
   @Test
-  public void checkSameBalanceWalletScreenToTwoOrMoreScreen() {
-    onView(withId(R.id.btn_die)).perform(click());
-    onView(withId(R.id.btn_die)).perform(click());
-    onView(withId(R.id.btn_die)).perform(click());
-    onView(withId(R.id.btn_die)).perform(click());
-    onView(withId(R.id.btn_die)).perform(click());
-
-    walletActivityRule.getScenario().onActivity(activity -> {
-      currBalance = ((TextView)activity.findViewById(R.id.txt_balance)).getText().toString();
-    });
-
-    onView(withId(R.id.button_two_or_more)).perform(click());
-
-    // Checks if balance is consistent in twoOrMoreActivity
-    onView(withId(R.id.txt_balance)).check(matches(withText(currBalance)));
-  }
-
-  @Test
-  public void checkSameBalanceTwoOrMoreScreenToWalletScreen() {
-    onView(withId(R.id.btn_die)).perform(click());
-    onView(withId(R.id.btn_die)).perform(click());
+  public void test1(){
+    //when
     onView(withId(R.id.btn_die)).perform(click());
     onView(withId(R.id.btn_die)).perform(click());
     onView(withId(R.id.btn_die)).perform(click());
@@ -87,21 +67,80 @@ public class DiceGamesInstrumentedTests {
 
     onView(withId(R.id.button_two_or_more)).perform(click());
 
-    TwoOrMoreActivity twoOrMoreActivity = (TwoOrMoreActivity) getCurrentActivity();
-
+    // then
     onView(withId(R.id.radioButton2Alike)).perform(click());
     onView(withId(R.id.Wager)).perform(clearText(), typeText("1"));
     onView(withId(R.id.buttonGo)).perform(click());
+    onView(withId(R.id.Wager)).perform(closeSoftKeyboard());
+    String s1 = getCurrentActivity().getString(R.id.txt_balance);
 
-    int resultBalance = twoOrMoreActivity.TwoOrMoreVM.balance();
-
+    // then
     onView(withId(R.id.buttonBack)).perform(click());
+    String s2 = getCurrentActivity().getString(R.id.txt_balance);
 
-    walletActivityRule.getScenario().onActivity(activity -> {
-      balance = activity.vm.balance();
-    });
+    // assert
+    assertThat(s2, equalTo(s1));
+  }
 
-    assertThat(resultBalance, is(balance));
+  @Test
+  public void test2() throws InterruptedException {
+    //first
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+
+    // when
+    onView(withId(R.id.button_two_or_more)).perform(click());
+
+    // and then
+    onView(withId(R.id.buttonInfo)).perform(click());
+    String s1 = getCurrentActivity().getString(R.id.textViewGameRule1);
+
+    // then
+    getCurrentActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+    String s2 = getCurrentActivity().getString(R.id.textViewGameRule1);
+
+    // assert
+    assertThat(s2, equalTo(s1));
+    Thread.sleep(1000);
+
+    // then
+    getCurrentActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+  }
+
+  @Test
+  public void test3() throws InterruptedException {
+    // when
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+    onView(withId(R.id.btn_die)).perform(click());
+
+    String s1 = getCurrentActivity().getString(R.id.txt_balance);
+
+    // then
+    getCurrentActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+    String s2 = getCurrentActivity().getString(R.id.txt_balance);
+    Thread.sleep(2000);
+
+    // assert
+    assertThat(s2, equalTo(s1));
+
+    // then
+    getCurrentActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    // assert
+    assertThat(getCurrentActivity().getString(R.id.txt_balance), equalTo(s2));
   }
 
   @Test
