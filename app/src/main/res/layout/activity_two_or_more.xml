@@ -41,7 +41,7 @@
 
     <!-- Options: 2 alike, 3 alike, 4 alike -->
     <RadioGroup
-        android:id="@+id/radioGroupOptions"
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -84,7 +84,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/radioGroupOptions">
+        app:layout_constraintTop_toBottomOf="@id/radioGroup">
 
         <TextView
             android:id="@+id/textViewWagerLabel"

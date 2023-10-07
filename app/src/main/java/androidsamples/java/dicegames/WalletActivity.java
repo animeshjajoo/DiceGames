@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.Locale;
 
 public class WalletActivity extends AppCompatActivity {
-  private Button btnDie, button_two_or_more;
+  private Button btnDie;
   private TextView txtBalance;
   private WalletViewModel vm;
   private static final String TAG = "WalletActivity";
@@ -28,7 +28,7 @@ public class WalletActivity extends AppCompatActivity {
     Log.d(TAG, "OnCreate");
     setContentView(R.layout.activity_wallet);
 
-    button_two_or_more = findViewById(R.id.button_two_or_more);
+    Button button_two_or_more = findViewById(R.id.button_two_or_more);
 
     // Set an OnClickListener for the button
 
@@ -38,6 +38,7 @@ public class WalletActivity extends AppCompatActivity {
     txtBalance = findViewById(R.id.txt_balance);
 
     btnDie.setOnClickListener(v -> {
+      Log.d("WalletActivity","Die");
       vm.setDie(new Die6());
       vm.rollDie();
       updateUI();
@@ -49,7 +50,9 @@ public class WalletActivity extends AppCompatActivity {
 
   public void onClickofTwoorMore(View v) {
     // Create an Intent to navigate to the TwoOrMoreActivity
+    Log.d("WalletActivity","TwoOrMoreButton");
     Intent intent = new Intent(this, TwoOrMoreActivity.class);
+    intent.putExtra(MAIN_BALANCE,txtBalance.toString());
     startActivity(intent);
   }
 

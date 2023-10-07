@@ -1,11 +1,9 @@
 package androidsamples.java.dicegames;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +12,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 
 public class TwoOrMoreActivity extends AppCompatActivity {
 
   static final String MAIN_BALANCE_RETURN = "MAIN_BALANCE_RETURN";
-  TwoOrMoreViewModel tmvm;
+  TwoOrMoreViewModel TwoOrMoreVM;
   Button go, back, info;
-  TextView one_die, two_die, three_die, four_die, txtCoins;
+  TextView die1, die2, die3, die4, txtCoins;
 
   RadioGroup radioGroup;
   RadioButton radioButton;
@@ -31,38 +32,37 @@ public class TwoOrMoreActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_two_or_more);
-
-    tmvm = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
+    Log.d("TwoActivity","TwoOrMoreButton");
+    TwoOrMoreVM = new ViewModelProvider(this).get(TwoOrMoreViewModel.class);
 
     int balance = getIntent().getIntExtra(WalletActivity.MAIN_BALANCE, 0);
-    tmvm.setBalance(balance);
+    TwoOrMoreVM.setBalance(balance);
 
-    tmvm.setDie();
-    txtCoins = findViewById(R.id.txt_coins);
-    go = findViewById(R.id.btn_go);
-    back = findViewById(R.id.btn_back);
-    info = findViewById(R.id.btn_info);
-    one_die = findViewById(R.id.die1);
-    two_die = findViewById(R.id.die2);
-    three_die = findViewById(R.id.die3);
-    four_die = findViewById(R.id.die4);
+    TwoOrMoreVM.setDie();
+    txtCoins = findViewById(R.id.textViewCoins);
+    go = findViewById(R.id.buttonGo);
+    back = findViewById(R.id.buttonBack);
+    info = findViewById(R.id.buttonInfo);
+    die1 = findViewById(R.id.buttonDie1);
+    die2 = findViewById(R.id.buttonDie2);
+    die3 = findViewById(R.id.buttonDie3);
+    die4 = findViewById(R.id.ButtonDie4);
     wager_txt = findViewById(R.id.Wager);
     radioGroup = findViewById(R.id.radioGroup);
-
 
     go.setOnClickListener(v -> {
       int selected = radioGroup.getCheckedRadioButtonId();
       radioButton = findViewById(selected);
 
       switch (selected) {
-        case R.id.alike_2:
-          tmvm.setGameType(GameType.TWO_ALIKE);
+        case R.id.radioButton2Alike:
+          TwoOrMoreVM.setGameType(GameType.TWO_ALIKE);
           break;
-        case R.id.alike_3:
-          tmvm.setGameType(GameType.THREE_ALIKE);
+        case R.id.radioButton3Alike:
+          TwoOrMoreVM.setGameType(GameType.THREE_ALIKE);
           break;
-        case R.id.alike_4:
-          tmvm.setGameType(GameType.FOUR_ALIKE);
+        case R.id.radioButton4Alike:
+          TwoOrMoreVM.setGameType(GameType.FOUR_ALIKE);
           break;
         default:
           Toast.makeText(this, "Select a Game Type", Toast.LENGTH_SHORT).show();
@@ -75,17 +75,17 @@ public class TwoOrMoreActivity extends AppCompatActivity {
       }
 
       try {
-        tmvm.setWager((Integer.parseInt(wager_txt.getText().toString())));
+        TwoOrMoreVM.setWager((Integer.parseInt(wager_txt.getText().toString())));
       } catch (NumberFormatException e){
         Toast.makeText(this, "Wager not a number!", Toast.LENGTH_SHORT).show();
         return;
       }
 
-      if (!tmvm.isValidWager()) {
+      if (!TwoOrMoreVM.isValidWager()) {
         Toast.makeText(this, "Wager is invalid", Toast.LENGTH_SHORT).show();
       } else {
 
-        game_result_toast = tmvm.play();
+        game_result_toast = TwoOrMoreVM.play();
 
         if (game_result_toast == GameResult.UNDECIDED) {
           throw new IllegalStateException("Game Result can't be decided!");
@@ -99,26 +99,26 @@ public class TwoOrMoreActivity extends AppCompatActivity {
         wager_txt.setText("");
 
         // Update UI
-        one_die.setText(String.valueOf(tmvm.dies.get(0).value()));
-        two_die.setText(String.valueOf(tmvm.dies.get(1).value()));
-        three_die.setText(String.valueOf(tmvm.dies.get(2).value()));
-        four_die.setText(String.valueOf(tmvm.dies.get(3).value()));
-        txtCoins.setText(String.valueOf(tmvm.balance()));
+        die1.setText(String.valueOf(TwoOrMoreVM.dies.get(0).value()));
+        die2.setText(String.valueOf(TwoOrMoreVM.dies.get(1).value()));
+        die3.setText(String.valueOf(TwoOrMoreVM.dies.get(2).value()));
+        die4.setText(String.valueOf(TwoOrMoreVM.dies.get(3).value()));
+        txtCoins.setText(String.valueOf(TwoOrMoreVM.balance()));
 
       }
     });
 
     // Update UI
-    one_die.setText(String.valueOf(tmvm.dies.get(0).value()));
-    two_die.setText(String.valueOf(tmvm.dies.get(1).value()));
-    three_die.setText(String.valueOf(tmvm.dies.get(2).value()));
-    four_die.setText(String.valueOf(tmvm.dies.get(3).value()));
-    txtCoins.setText(String.valueOf(tmvm.balance()));
+    die1.setText(String.valueOf(TwoOrMoreVM.dies.get(0).value()));
+    die2.setText(String.valueOf(TwoOrMoreVM.dies.get(1).value()));
+    die3.setText(String.valueOf(TwoOrMoreVM.dies.get(2).value()));
+    die4.setText(String.valueOf(TwoOrMoreVM.dies.get(3).value()));
+    txtCoins.setText(String.valueOf(TwoOrMoreVM.balance()));
   }
 
   public void returnToWallet(View view) {
     Intent change = new Intent(this, WalletActivity.class);
-    int tmp = tmvm.balance();
+    int tmp = TwoOrMoreVM.balance();
     change.putExtra(MAIN_BALANCE_RETURN, tmp);
     setResult(RESULT_OK, change);
     finish();
@@ -127,7 +127,7 @@ public class TwoOrMoreActivity extends AppCompatActivity {
   @Override
   public void onBackPressed() {
     Intent change = new Intent(this, WalletActivity.class);
-    int tmp = tmvm.balance();
+    int tmp = TwoOrMoreVM.balance();
     change.putExtra(MAIN_BALANCE_RETURN, tmp);
     setResult(RESULT_CANCELED, change);
     finish();
